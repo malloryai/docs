@@ -17,10 +17,19 @@ For detailed API changes, see the [API Reference](/api-reference/introduction), 
 
 ### February 2026
 
+**February 20**
+
+- **Intelligent Alerts** — Workflows are now used, dynamic time periods (e.g. past hour, past 5 days) for trending; Slack delivery
+- **Database reliability** — Improved behavior under high-volume updates
+- **Org & membership sync** — Organization and membership sync automatically to the app; one org per user at launch
+- **Follow lists** — Tenant-level follow lists; add or full-replace for topics and entities; API available
+- **IOC export** — New export of observables and opinions for Censys integration
+- **Assetquery tool** — [Asset Query](https://github.com/malloryai/assetquery) for querying assets from the command line or integrations
+- **Claude Code marketplace & MCP server** — [Mallory MCP](https://github.com/malloryai/mallorymcp) server and [Mallory API](https://github.com/malloryai/malloryapi) client available as plugins in the Claude Code marketplace
+
 **February 13**
 
-- **Schedules** — Mastra workflows are now used; report generation and delivery run sequentially
-- **API query tool** — Agent now has a tool with API read access; long responses truncated with pagination hint
+- **API Query Tool** — Agent now has a tool with API read access; long responses truncated with pagination hint
 - **Improved tabletop exercise tool** — Streams into UI component; Slack block component added
 - **Countries & industries** — Standardized (alpha-2 countries, GICS two-level); Queries (e.g. by industry) are now supported
 
@@ -62,10 +71,6 @@ For detailed API changes, see the [API Reference](/api-reference/introduction), 
 **January 6**
 
 - **Exploit analysis** — Now live in product UI
-- **madmin** — Command refactored
-
-**January 4**
-
 - **Markdown in emails** — Schedule delivery emails now render Markdown properly
 - **Navbar rework** — Observables as a single item; "Entities" vs "Threat intelligence"; search moved up and reorganized
 - **Observable quick links** — Easier access to relevant and recent observables
