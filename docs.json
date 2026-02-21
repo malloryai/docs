@@ -44,7 +44,7 @@
       },
       {
         "tab": "API Reference",
-        "openapi": "https://api.mallory.ai/openapi.json",
+        "openapi": "api-reference/openapi.json",
         "groups": [
           {
             "group": "Overview",
@@ -68,7 +68,12 @@
     "dark": "/logo/dark.svg"
   },
   "navbar": {
-    "links": [{ "label": "Support", "href": "mailto:support@mallory.ai" }],
+    "links": [
+      {
+        "label": "Support",
+        "href": "mailto:hello@mallory.ai"
+      }
+    ],
     "primary": {
       "type": "button",
       "label": "Dashboard",

@@ -31,3 +31,23 @@ node scripts/sync-export-docs.js --regenerate
 
 - After pulling core changes that touch `core/docs/exports/` or vuln intel export models.
 - Before publishing docs if you want the latest export format docs in the site.
+
+---
+
+## Updating the API Reference OpenAPI file
+
+The docs site uses a **local** OpenAPI spec at `api-reference/openapi.json` so Mintlify deployment doesn’t depend on fetching `https://api.mallory.ai/openapi.json` at build time.
+
+To refresh the API reference after API changes:
+
+1. In the **core** repo, regenerate the public spec:
+   ```bash
+   pdm run python core/scripts/generate_openapi_doc.py
+   ```
+2. Copy the generated file into the docs repo:
+   ```bash
+   cp core/docs/openapi.json mintlify-docs/api-reference/openapi.json
+   ```
+3. Commit and push the updated `api-reference/openapi.json` in mintlify-docs.
+
+Optionally, add a CI job in core that runs the generator and commits the result to mintlify-docs, or a script in mintlify-docs that runs the core generator and copies the file.
