@@ -1,11 +1,11 @@
 ---
-title: "Chat"
-description: "Use the conversational interface to query and explore Mallory's intelligence"
+title: "Agent Threads"
+description: "Use Agent Threads to query and explore Mallory's intelligence in conversation"
 ---
 
-## Chat with your intelligence
+## Agent Threads
 
-Mallory's **Chat** is a contextualized conversational interface that lets you query, explore, and reason over Mallory's intelligence data in natural language.
+Mallory's **Agent Threads** is a contextualized conversational interface that lets you query, explore, and reason over Mallory's intelligence data in natural language.
 
 ### What you can do
 
@@ -14,17 +14,62 @@ Mallory's **Chat** is a contextualized conversational interface that lets you qu
 - **Investigate recent activity** – Trending and recent mentions across sources
 - **Get summaries** – Context and insights without digging through raw data
 
-### How to use Chat
+### How to use Agent Threads
 
-1. Open **Chat** from the app (e.g. [app.mallory.ai](https://app.mallory.ai)).
+1. Open **Agent Threads** from the app (e.g. [app.mallory.ai](https://app.mallory.ai)).
 2. Type your question in plain language (e.g. "What do we know about LockBit?" or "Recent mentions of CVE-2024-1234").
-3. Use follow-up questions to go deeper; Chat keeps context of the conversation.
+3. Use follow-up questions to go deeper; Agent Threads keeps context of the conversation.
 
 ### Tips
 
 - Be specific when you ask about an entity (name, alias, or CVE ID).
 - You can ask for comparisons, timelines, or related entities.
-- Chat uses the same entities, references, and mentions that power the rest of Mallory—so you're always querying live intelligence.
+- Agent Threads uses the same entities, references, and mentions that power the rest of Mallory—so you're always querying live intelligence.
+
+## The Agent
+
+The Agent is the AI that powers Agent Threads. It has access to Mallory's knowledge base, search tools, report generators, and delivery tools so it can answer questions, run reports, and send results to you via **email** or **Slack** when you ask.
+
+### Suggested prompts
+
+Try these to get the most out of the Agent:
+
+**Entities and intel**
+
+- "What do we know about LockBit?"
+- "Recent mentions of CVE-2024-1234"
+- "Find threat actors that target healthcare"
+- "What malware is associated with APT29?"
+- "Show me attack pattern T1566 and which actors use it"
+
+**Reports**
+
+- "Generate a report of recent vulnerabilities from the last 24 hours"
+- "Give me a report on threat actors with recent mentions this week"
+
+**Scheduled delivery**
+
+- "Email me the latest vulnerabilities every day"
+- "Send me a weekly threat actor report every Monday in Slack"
+- "Run the recent vulnerabilities report and email it to me every morning at 9"
+
+Use natural language for schedules (e.g. "daily", "every Monday at 9am", "weekly"). Include how you want to receive the output (email or Slack) in your request; the Agent will set up the schedule and the delivery method.
+
+### How schedules work
+
+Schedules let you **rerun a prompt on a recurring basis** so you get fresh intelligence without opening the app.
+
+1. **Schedule is attached to a thread** – When you ask for something on a schedule (e.g. "email me the latest vulnerabilities daily"), the Agent creates a schedule for the current thread. That schedule stores the **prompt** (what to run) and the **recurrence** (how often).
+
+2. **Prompt runs on the schedule** – At each run time, the system re-executes that prompt in the context of the same thread. The Agent runs the same tools it would in chat (e.g. generate recent vulnerabilities report, fetch entities) and produces the result.
+
+3. **Delivery via Slack or email** – You specify in the prompt how you want the output delivered. The Agent can use **Slack** or **email** tools to send the generated content to you. For Slack, you choose or configure a Slack integration in the schedule settings; for email, results are sent to your account. Schedules do not support event-based triggers (e.g. "alert me when X changes")—only time-based recurrence (daily, weekly, etc.).
+
+4. **Manage schedules** – You can view, edit, pause, or delete schedules in the thread's schedule settings. The API also supports schedule CRUD; see **Other** in the API Reference for `GET/POST/PATCH/DELETE /v1/schedules`.
+
+<Note>
+Schedules run at most once per day. Use natural language like "daily", "every Monday at 9am", or "weekly"; the Agent converts it to a cron-style schedule in your timezone.
+</Note>
 
 ## Related
 

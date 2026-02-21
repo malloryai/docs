@@ -3,7 +3,7 @@
   "theme": "mint",
   "name": "Mallory",
   "colors": { "primary": "#005CFF", "light": "#135FFF", "dark": "#0042B8" },
-  "favicon": "/favicon.svg",
+  "favicon": "/favicon.ico",
   "navigation": {
     "tabs": [
       {
