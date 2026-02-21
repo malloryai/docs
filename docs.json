@@ -18,6 +18,7 @@
             "pages": [
               "use/chat",
               "use/current-events",
+              "use/stories",
               "use/entities",
               "use/indicators"
             ]

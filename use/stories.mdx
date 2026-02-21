@@ -1,0 +1,69 @@
+---
+title: "Stories"
+description: "Curated security narratives and the sections that make them up"
+---
+
+## Stories in Mallory
+
+**Stories** are curated security narratives that group related entities and context from many references into a single, coherent view. Instead of browsing raw articles or references, you get a story that summarizes a campaign, a CVE, a breach, or another development—with links to the underlying entities and sources when you need to go deeper.
+
+### What a story gives you
+
+- A **narrative summary** of what happened and why it matters
+- **Key entities** (actors, malware, vulnerabilities, organizations) tied to the story
+- **References** (articles, advisories, reports) that support the story
+- A **timeline** of events when available
+- **Related stories** so you can follow threads across the platform
+
+---
+
+## Sections of a story
+
+When you open a story in the app or via the API, you’ll see these main sections.
+
+### Summary (overview)
+
+The **summary** is the story’s headline and narrative. It explains what the story is about—e.g. a new campaign, an emerging vulnerability, or a breach—and gives you enough context to decide whether to drill in. This is what you see in the feed and at the top of the story detail view.
+
+### Key entities
+
+Stories are built from **entities** mentioned across references. The **key entities** (or focus entities) section lists the main threat actors, malware, vulnerabilities, organizations, or other types that the story centers on. Use this to jump to entity pages for aliases, relationships, and indicators.
+
+### References
+
+**References** are the underlying sources: blog posts, advisories, reports, and other content that Mallory used to build and update the story. Each reference can be opened for full text, and references are linked to the entities mentioned in them. This section answers “where does this intel come from?”
+
+### Timeline (events)
+
+When the platform has structured event data (e.g. disclosure dates, campaign activity), the **timeline** or **events** section shows a chronological view. Use it to see when things happened and in what order.
+
+### Related stories
+
+**Related** (or similar) stories point you to other narratives that overlap in entities, topics, or time. Helpful for following a campaign across multiple stories or seeing how a CVE appears in different contexts.
+
+---
+
+## How to use stories
+
+1. Open **The feed** or **Stories** in the app (e.g. [app.mallory.ai](https://app.mallory.ai)).
+2. Click a story to open its detail view and move between sections (summary, entities, references, timeline, related).
+3. Use **Key entities** to go to entity pages; use **References** to open source material or export.
+
+Stories are also available via the API: list stories, get a story by identifier, and fetch its entities, references, events, and similar stories. See the [API Reference](/api-reference/introduction) for endpoints under **Stories**.
+
+## Related
+
+<CardGroup cols={2}>
+  <Card title="The Feed" icon="rss" href="/use/current-events">
+    Where stories surface as curated feed items.
+  </Card>
+  <Card title="Entities" icon="shield" href="/use/entities">
+    Drill into the actors, malware, and vulnerabilities in a story.
+  </Card>
+  <Card title="Key concepts" icon="unity" href="/concepts">
+    How references, mentions, and entities feed into stories.
+  </Card>
+  <Card title="API Reference" icon="code" href="/api-reference/introduction">
+    Stories and sub-resources in the API.
+  </Card>
+</CardGroup>
