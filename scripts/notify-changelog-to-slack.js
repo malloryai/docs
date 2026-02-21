@@ -1,56 +1,70 @@
 #!/usr/bin/env node
 /**
- * When the changelog page (changelog.mdx) is updated, compute its hash and, if it
- * changed, post the latest update to Slack (internal and community webhooks).
+ * When the changelog page (changelog.mdx) is updated, post the latest section to
+ * Slack (internal and community webhooks). Uses git history to decide if the
+ * changelog changed, so no hash file is required.
  *
- * Intended to run in GitHub Actions on pushes that touch changelog.mdx. The script
- * stores the last-seen content hash in CHANGELOG_HASH_FILE so subsequent runs do
- * not re-post the same content.
+ * Intended to run in GitHub Actions on push. Pass REF_BEFORE and REF_AFTER (e.g.
+ * github.event.before and github.sha) so the script can detect if changelog.mdx
+ * changed in the push. Without those, compares HEAD^ to HEAD (last commit).
  *
  * Usage (from mintlify-docs repo root):
  *   node scripts/notify-changelog-to-slack.js
- *   node scripts/notify-changelog-to-slack.js --force   # post even if hash unchanged
+ *   node scripts/notify-changelog-to-slack.js --force   # post even if git says unchanged
  *
  * Environment:
  *   INTERNAL_SLACK_WEBHOOK   Incoming webhook URL for internal #changelog
- *   COMMUNITY_SLACK_WEBHOOK   Incoming webhook URL for community changelog
- *   CHANGELOG_HASH_FILE                 Path to file storing last hash (default: scripts/.changelog-hash)
+ *   COMMUNITY_SLACK_WEBHOOK  Incoming webhook URL for community changelog
+ *   REF_BEFORE               (optional) Git ref before push (e.g. github.event.before)
+ *   REF_AFTER                (optional) Git ref after push (e.g. github.sha); used with REF_BEFORE
  *
  * Flow:
- *   1. Read changelog.mdx and compute SHA-256 hash.
- *   2. Read stored hash from CHANGELOG_HASH_FILE (if present).
- *   3. If hash changed (or --force): extract the latest timeline section, format as
- *      Slack message, POST to both webhooks, write new hash to CHANGELOG_HASH_FILE.
- *   4. Exit 0 if no action or success; exit 1 on error.
+ *   1. If REF_BEFORE and REF_AFTER are set, check if changelog.mdx changed between those refs.
+ *      Otherwise check if it changed between HEAD^ and HEAD.
+ *   2. If unchanged (and not --force): exit 0. No post, no file to commit.
+ *   3. If changed (or --force): extract latest timeline section, POST to both webhooks.
  */
 
 const fs = require("fs");
 const path = require("path");
-const crypto = require("crypto");
+const { execSync } = require("child_process");
 
 const REPO_ROOT = path.resolve(__dirname, "..");
 const CHANGELOG_PATH = path.join(REPO_ROOT, "changelog.mdx");
-const HASH_FILE =
-  process.env.CHANGELOG_HASH_FILE ||
-  path.join(REPO_ROOT, "scripts", ".changelog-hash");
+const CHANGELOG_GIT_PATH = "changelog.mdx";
 const INTERNAL_WEBHOOK = process.env.INTERNAL_SLACK_WEBHOOK;
 const COMMUNITY_WEBHOOK = process.env.COMMUNITY_SLACK_WEBHOOK;
+const REF_BEFORE = process.env.REF_BEFORE;
+const REF_AFTER = process.env.REF_AFTER;
 
-function computeHash(content) {
-  return crypto.createHash("sha256").update(content, "utf8").digest("hex");
-}
-
-function readStoredHash() {
+/**
+ * Returns true if changelog.mdx was modified between refBefore and refAfter.
+ */
+function changelogChangedInRange(refBefore, refAfter) {
   try {
-    return fs.readFileSync(HASH_FILE, "utf8").trim();
+    execSync(
+      `git diff --quiet ${refBefore} ${refAfter} -- ${CHANGELOG_GIT_PATH}`,
+      { cwd: REPO_ROOT, stdio: "pipe" },
+    );
+    return false; // exit 0 = no diff
   } catch (e) {
-    if (e.code === "ENOENT") return null;
-    throw e;
+    return true; // exit 1 = has diff
   }
 }
 
-function writeStoredHash(hash) {
-  fs.writeFileSync(HASH_FILE, hash + "\n", "utf8");
+function changelogChanged() {
+  if (REF_BEFORE && REF_AFTER) {
+    return changelogChangedInRange(REF_BEFORE, REF_AFTER);
+  }
+  try {
+    execSync(`git rev-parse HEAD^`, { cwd: REPO_ROOT, stdio: "pipe" });
+  } catch (e) {
+    console.log(
+      "No HEAD^ (e.g. first commit or shallow clone). Treating as changed.",
+    );
+    return true;
+  }
+  return changelogChangedInRange("HEAD^", "HEAD");
 }
 
 /**
@@ -117,12 +131,8 @@ async function main() {
     process.exit(1);
   }
 
-  const content = fs.readFileSync(CHANGELOG_PATH, "utf8");
-  const currentHash = computeHash(content);
-  const storedHash = readStoredHash();
-
-  if (!force && storedHash === currentHash) {
-    console.log("Changelog unchanged (hash match). Nothing to post.");
+  if (!force && !changelogChanged()) {
+    console.log("Changelog unchanged (git). Nothing to post.");
     process.exit(0);
   }
 
@@ -131,6 +141,7 @@ async function main() {
     process.exit(1);
   }
 
+  const content = fs.readFileSync(CHANGELOG_PATH, "utf8");
   const latestText = extractLatestSection(content);
   if (!latestText) {
     console.error("Could not extract latest changelog section.");
@@ -147,8 +158,7 @@ async function main() {
     process.exit(1);
   }
 
-  writeStoredHash(currentHash);
-  console.log("Posted latest changelog to Slack and updated stored hash.");
+  console.log("Posted latest changelog to Slack.");
   process.exit(0);
 }
 

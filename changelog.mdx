@@ -21,18 +21,26 @@ For detailed API changes, see the [API Reference](/api-reference/introduction), 
 
 - *(Updates to be noted here.)*
 
-**February 1**
+**February 13**
 
-- **created_at / updated_at filtering** — Available across all objects in the platform with URL sync
+- **Schedules** — Mastra workflows are now used; report generation and delivery run sequentially
+- **API query tool** — Agent now has a tool with API read access; long responses truncated with pagination hint
+- **Improved tabletop exercise tool** — Streams into UI component; Slack block component added
+- **Countries & industries** — Standardized (alpha-2 countries, GICS two-level); Queries (e.g. by industry) are now supported
+
+**February 6**
+
+- **Observables** — Consensus badge replaced with verdict counts (malicious / suspicious / benign / unknown)
+- **Enriched at filter** — Added to all entities that support enrichment
+- **CISA KEV** — Added-date filter for vulnerabilities
+- **Web search toggle** — Agent can now toggle web search on / off
 
 **February 2**
-
+- **created_at / updated_at filtering** — Available across all objects in the platform with URL sync
 - **Vulnerabilities page** — Advanced filters (faceted search) added
 - **Agent history page** — New history page with schedule and sorting support
-- **Mastra 1.1.0** — Platform now running on Mastra 1.1.0; schedule support included in history page
 - **Observables/opinions** — "Consensus" display replaced with simpler **Verdicts** count
-- **Token usage** — Now tracked in production by user
-- **Sources in the database** — Sources now exist in the DB and are read at startup; enables cross-reference with citations; sources and references now have `tenant_uuid` on the model
+- **Sources in the database** — Sources now exist in the DB and are read at startup;
 - **API client and MCP server** — Overhauled; working well with Claude Code
 
 ---

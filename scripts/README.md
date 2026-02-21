@@ -56,19 +56,19 @@ Optionally, add a CI job in core that runs the generator and commits the result 
 
 ## notify-changelog-to-slack.js
 
-When the changelog page (`changelog.mdx`) is updated, hashes the file and, if the hash changed, posts the latest timeline section to Slack (internal and community webhooks). Used in GitHub Actions so that updates to the changelog trigger a notification to the two changelog channels.
+When the changelog page (`changelog.mdx`) is updated, posts the latest timeline section to Slack (internal and community webhooks). Uses **git history** to detect changes (no hash file). Used in GitHub Actions so that updates to the changelog trigger a notification to the two changelog channels.
 
-**Flow:** Hash `changelog.mdx` → compare to stored hash in `scripts/.changelog-hash` → if different (or `--force`): extract latest month section, POST to both webhooks, write new hash to `scripts/.changelog-hash`.
+**Flow:** Check if `changelog.mdx` changed between two git refs (e.g. before/after push, or `HEAD^`/`HEAD`). If changed (or `--force`): extract latest month section, POST to both webhooks. No file is written; nothing to commit.
 
 ### Usage
 
 From the **mintlify-docs** repo root:
 
 ```bash
-# Post to Slack only if changelog content changed since last run
+# Post to Slack only if changelog changed in git (last commit or REF_BEFORE..REF_AFTER)
 node scripts/notify-changelog-to-slack.js
 
-# Post even if hash unchanged (e.g. to re-send latest section)
+# Post even if git says unchanged (e.g. to re-send latest section)
 node scripts/notify-changelog-to-slack.js --force
 ```
 
@@ -76,24 +76,23 @@ node scripts/notify-changelog-to-slack.js --force
 
 - **`INTERNAL_SLACK_WEBHOOK`** – Incoming webhook URL for internal #changelog.
 - **`COMMUNITY_SLACK_WEBHOOK`** – Incoming webhook URL for community changelog.
-- **`CHANGELOG_HASH_FILE`** – Optional path to file storing last content hash (default: `scripts/.changelog-hash`).
+- **`REF_BEFORE`** – (optional) Git ref before the push (e.g. `${{ github.event.before }}`). Used with `REF_AFTER` so the script detects changelog changes in the push.
+- **`REF_AFTER`** – (optional) Git ref after the push (e.g. `${{ github.sha }}`). If both are set, the script checks `git diff REF_BEFORE REF_AFTER -- changelog.mdx`. If not set, uses `HEAD^` and `HEAD` (last commit only).
 
 ### GitHub Actions
 
-Add a workflow that runs on push (e.g. to `main`) when `changelog.mdx` changes:
+Add a workflow that runs on push (e.g. to `main`). No need to commit any hash file.
 
-1. Run `node scripts/notify-changelog-to-slack.js` with the two webhook secrets set.
-2. If the script updates the hash file, commit and push `scripts/.changelog-hash` so the next run does not re-post the same content.
-
-Example job step:
+Example job step (recommended: pass refs so any commit in the push that touched the changelog triggers a post):
 
 ```yaml
 - name: Notify Slack on changelog update
   env:
     INTERNAL_SLACK_WEBHOOK: ${{ secrets.INTERNAL_SLACK_WEBHOOK }}
     COMMUNITY_SLACK_WEBHOOK: ${{ secrets.COMMUNITY_SLACK_WEBHOOK }}
+    REF_BEFORE: ${{ github.event.before }}
+    REF_AFTER: ${{ github.sha }}
   run: node scripts/notify-changelog-to-slack.js
-# Optional: commit updated .changelog-hash if it changed
 ```
 
-You can use a conditional step to commit only when `scripts/.changelog-hash` was modified.
+To run only when `changelog.mdx` is in the set of changed files, use a path filter on the job or workflow (e.g. `paths: ['changelog.mdx']`).
