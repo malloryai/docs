@@ -1,0 +1,34 @@
+# When changelog.mdx is updated, notify internal and community Slack channels with the
+# latest section. Persists the content hash so we only post when the changelog actually
+# changes (not on every run).
+name: Notify Slack on changelog update
+
+on:
+  push:
+    paths:
+      - "changelog.mdx"
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Notify Slack on changelog update
+        env:
+          INTERNAL_SLACK_WEBHOOK: ${{ secrets.INTERNAL_SLACK_WEBHOOK }}
+          COMMUNITY_SLACK_WEBHOOK: ${{ secrets.COMMUNITY_SLACK_WEBHOOK }}
+        run: node scripts/notify-changelog-to-slack.js
+
+      - name: Commit and push hash file if updated
+        if: success()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add scripts/.changelog-hash
+          git diff --staged --quiet && echo "No hash file update; nothing to commit." && exit 0
+          git commit -m "chore: update changelog hash after Slack notification"
+          git push

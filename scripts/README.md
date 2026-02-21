@@ -51,3 +51,49 @@ To refresh the API reference after API changes:
 3. Commit and push the updated `api-reference/openapi.json` in mintlify-docs.
 
 Optionally, add a CI job in core that runs the generator and commits the result to mintlify-docs, or a script in mintlify-docs that runs the core generator and copies the file.
+
+---
+
+## notify-changelog-to-slack.js
+
+When the changelog page (`changelog.mdx`) is updated, hashes the file and, if the hash changed, posts the latest timeline section to Slack (internal and community webhooks). Used in GitHub Actions so that updates to the changelog trigger a notification to the two changelog channels.
+
+**Flow:** Hash `changelog.mdx` → compare to stored hash in `scripts/.changelog-hash` → if different (or `--force`): extract latest month section, POST to both webhooks, write new hash to `scripts/.changelog-hash`.
+
+### Usage
+
+From the **mintlify-docs** repo root:
+
+```bash
+# Post to Slack only if changelog content changed since last run
+node scripts/notify-changelog-to-slack.js
+
+# Post even if hash unchanged (e.g. to re-send latest section)
+node scripts/notify-changelog-to-slack.js --force
+```
+
+### Environment
+
+- **`INTERNAL_SLACK_WEBHOOK`** – Incoming webhook URL for internal #changelog.
+- **`COMMUNITY_SLACK_WEBHOOK`** – Incoming webhook URL for community changelog.
+- **`CHANGELOG_HASH_FILE`** – Optional path to file storing last content hash (default: `scripts/.changelog-hash`).
+
+### GitHub Actions
+
+Add a workflow that runs on push (e.g. to `main`) when `changelog.mdx` changes:
+
+1. Run `node scripts/notify-changelog-to-slack.js` with the two webhook secrets set.
+2. If the script updates the hash file, commit and push `scripts/.changelog-hash` so the next run does not re-post the same content.
+
+Example job step:
+
+```yaml
+- name: Notify Slack on changelog update
+  env:
+    INTERNAL_SLACK_WEBHOOK: ${{ secrets.INTERNAL_SLACK_WEBHOOK }}
+    COMMUNITY_SLACK_WEBHOOK: ${{ secrets.COMMUNITY_SLACK_WEBHOOK }}
+  run: node scripts/notify-changelog-to-slack.js
+# Optional: commit updated .changelog-hash if it changed
+```
+
+You can use a conditional step to commit only when `scripts/.changelog-hash` was modified.

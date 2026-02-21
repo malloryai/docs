@@ -5,21 +5,124 @@ description: "Release notes, new features, and notable changes"
 
 ## What's new
 
-This page tracks product and API updates. Check back for the latest releases and features.
-
-### Coming Soon
-
-Changelog entries will be added here as we ship new versions. You can expect:
-
-- **Product updates** – New or improved UI, Chat, dashboards, and current events
-- **API & platform** – New endpoints, parameters, and breaking changes when applicable
-- **Integrations** – MCP, exports, and other integration updates
+This page tracks product and API updates, newest first. Check back for the latest releases and features.
 
 <Note>
 For detailed API changes, see the [API Reference](/api-reference/introduction), which is always generated from the live [OpenAPI spec](https://api.mallory.ai/openapi.json).
 </Note>
 
-### Stay Updated
+---
+
+## Timeline
+
+### February 2026
+
+**February 1**
+
+- **created_at / updated_at filtering** — Available across all objects in the platform with URL sync
+
+**Early February**
+
+- **Vulnerabilities page** — Advanced filters (faceted search) added
+- **Agent history page** — New history page with schedule and sorting support
+- **Mastra 1.1.0** — Platform now running on Mastra 1.1.0; schedule support included in history page
+- **Observables/opinions** — "Consensus" display replaced with simpler **Verdicts** count
+- **Token usage** — Now tracked in production by user
+- **Sources in the database** — Sources now exist in the DB and are read at startup; enables cross-reference with citations; sources and references now have `tenant_uuid` on the model
+- **API client and MCP server** — Overhauled; working well with Claude Code
+
+---
+
+### January 2026
+
+**January 4**
+
+- **Markdown in emails** — Schedule delivery emails now render Markdown properly
+- **Navbar rework** — Observables as a single item; "Entities" vs "Threat intelligence"; search moved up and reorganized
+- **Observable quick links** — Easier access to relevant and recent observables
+
+**January 6**
+
+- **Exploit analysis** — Now live in product UI
+- **madmin** — Command refactored
+
+**Early January**
+
+- **Advisory pages** — Now show affected technology product configurations
+- **Entity search tool for the agent** — Agent can search for entity objects by name (foundation for future tools that fetch related objects)
+- **Exploit analysis payloads** — Now use the Code Block component from AI Elements (syntax highlighting, line numbers, copy)
+- **Schedule deliveries** — Now include a footer that links back to the thread
+- **Schedules and Slack** — Schedules can be associated with Slack integrations; delivery to specific channels (no fallback to hardcoded webhook)
+- **Semantic diff tool** — Chat and schedule agents can monitor entities, stories, or search queries for new information (invoke via prompt)
+
+**January 18**
+
+- **Sources page** — Selection by type and improved display
+- **Individual source page** — New page for each source
+- **Reference pages** — Cleaned up; raw content and much raw analysis hidden for non-admin users; better experience for debugging analyzers
+- **Search on entity aliases** — [app.mallory.ai/search](https://app.mallory.ai/search) now supports searching on aliases (e.g. `react2shell` for vulnerabilities)
+
+**Late January**
+
+- **New app design** — Landed across the app
+- **madmin** — CLI usage for citation bulk ingest (e.g. loop with `--limit` and `--confirm`)
+- **Attack patterns** — New entity listing and detail pages
+- **Public OpenAPI spec** — Available at [api.mallory.ai/v1/openapi.json](https://api.mallory.ai/v1/openapi.json)
+- **Advanced filtering (faceted search)** — On the Threat Actors page; coming to other entity pages
+- **Breaches v1** — Now in platform (listing and detail); v2 planned (see Linear MAL-2457)
+
+---
+
+### December 2025
+
+**December 10** — Changelog channel created; first product updates:
+
+- **New features**
+  - **Malware entity pages** (MAL-901) — Listing and detail pages for malware entities
+  - **Organization entity pages** (MAL-1885) — Listing and detail pages for organizations
+- **Improvements**
+  - **Mentions on vendor/product pages** (MAL-1843) — Mentions now displayed on vendor and product detail pages
+  - **AI descriptions** (MAL-1888) — Product and vendor pages prefer AI-generated descriptions when available
+  - **Unified trending dashboards** (MAL-845) — All entity listing pages (products, vendors, vulnerabilities, actors) use listing endpoints with trending sort, replacing legacy dashboard endpoints
+
+**Mid-December**
+
+- **Observable and opinion extraction** — Updated to pull more out of ingested references
+- **Observable ↔ entity relationships** — Now represented in the gold layer
+- **Observables and opinions in the UI** — New UI for observables and opinions (entity relationships followed later)
+
+**December 14**
+
+- **Upstream / citations** — Now shown on reference pages
+
+**December 15**
+
+- **Reference detail pages** — Now show more entity types
+
+**Mid–late December**
+
+- **Stories and related entities** — Stories now list related entities for malware, vendors, products, and organizations (in addition to vulns and threat actors)
+- **Entity detail performance** — Resolved several issues impacting performance on malware, actors, products, vendors, and vuln detail pages; vuln detail pages load much faster
+- **Aliases section** — Added to all entity detail pages that have aliases (replaces prior "synonyms" section)
+- **Actor detail pages** — Now list additional API attributes and have paginated mentions tables
+- **Slack integration** — In production (API only for now, no UI), including an execute endpoint for the chat agent
+- **Product advisory detail pages** — Link to their source URLs
+- **Autogenerated TPCs** — Being rolled up into gold
+- **Technology vendor entity removed** — In favor of direct organization ↔ tech product relationship
+- **Entity resolution API** — Vastly simplified; removed from gold
+- **Admin stats API** — Updated to export story topics and add observables
+- **Observables on entity pages** — Now on malware, threat actors, and vulnerability entity pages
+- **Workspaces removed** — Concept removed from the web app (to be replaced by tenants)
+- **Integrations in the UI** — Available at [app.mallory.ai/integrations](https://app.mallory.ai/integrations), guarded by feature flag (mallory.ai email)
+- **Standalone ingest tool** — Added (limited due to SSRF and corpus poisoning considerations)
+- **madmin** — New command to generate a story image (local only)
+- **Basic search** — Available at [app.mallory.ai/search](https://app.mallory.ai/search); searches across entity types and stories with web-search-style syntax (OR, quotes, negations); feature-flagged for Mallory internal users
+- **Schedules list** — Available at [app.mallory.ai/schedules](https://app.mallory.ai/schedules) (feature-flagged)
+- **Generated story images** — Now visible in the app with CSS that works in light and dark modes
+
+---
+
+### Stay updated
 
 - Bookmark this page or the **What's new** section in the sidebar.
-- If you integrate via the API, watch the API Reference for new or changed operations.
+- If you integrate via the API, watch the [API Reference](/api-reference/introduction) for new or changed operations.
