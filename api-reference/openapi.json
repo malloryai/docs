@@ -19279,7 +19279,7 @@
           "entity_type": "threat_actor",
           "evidence": "Multiple sources confirm same group",
           "evidence_urls": [
-            "https://example.com/report-1"
+            "https://api.mallory.ai/report-1"
           ],
           "from": "m-threat_actor-apt28-a1b2",
           "merge_on": "internal_name",
