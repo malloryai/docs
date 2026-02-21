@@ -46,73 +46,140 @@
           {
             "group": "Entities",
             "pages": [
-              "GET /v1/actors",
-              "GET /v1/actors/{identifier}",
-              "GET /v1/actors/{identifier}/attack_patterns",
-              "GET /v1/actors/{identifier}/export",
-              "GET /v1/actors/{identifier}/mentions",
-              "GET /v1/actors/{identifier}/observables",
-              "GET /v1/attack_patterns",
-              "GET /v1/attack_patterns/{identifier}",
-              "GET /v1/attack_patterns/{identifier}/malware",
-              "GET /v1/attack_patterns/{identifier}/mentions",
-              "GET /v1/attack_patterns/{identifier}/threat_actors",
-              "GET /v1/breaches",
-              "GET /v1/breaches/{identifier}",
-              "GET /v1/breaches/{identifier}/organizations",
-              "GET /v1/detection_signatures",
-              "GET /v1/detection_signatures/{identifier}",
-              "GET /v1/exploitations",
-              "GET /v1/exploitations/{identifier}",
-              "GET /v1/exploits",
-              "GET /v1/exploits/{identifier}",
-              "GET /v1/exploits/{identifier}/export",
-              "GET /v1/exploits/{identifier}/vulnerabilities",
-              "GET /v1/industries",
-              "GET /v1/industries/{code}",
-              "GET /v1/malware",
-              "GET /v1/malware/{identifier}",
-              "GET /v1/malware/{identifier}/attack_patterns",
-              "GET /v1/malware/{identifier}/export",
-              "GET /v1/malware/{identifier}/mentions",
-              "GET /v1/malware/{identifier}/observables",
-              "GET /v1/malware/{identifier}/vulnerabilities",
-              "GET /v1/organizations",
-              "GET /v1/organizations/{identifier}",
-              "GET /v1/organizations/{identifier}/breaches",
-              "GET /v1/organizations/{identifier}/export",
-              "GET /v1/organizations/{identifier}/mentions",
-              "GET /v1/organizations/{identifier}/products",
-              "GET /v1/products",
-              "GET /v1/products/{identifier}",
-              "GET /v1/products/{identifier}/export",
-              "GET /v1/products/{identifier}/mentions",
-              "GET /v1/products/{identifier}/technology_product_advisories",
-              "GET /v1/technology_product_advisories",
-              "GET /v1/technology_product_advisories/{identifier}",
-              "GET /v1/technology_product_advisories/{identifier}/export",
-              "GET /v1/technology_product_advisories/{identifier}/products",
-              "GET /v1/technology_product_advisories/{identifier}/vulnerabilities",
-              "GET /v1/vulnerabilities",
-              "GET /v1/vulnerabilities/{identifier}",
-              "GET /v1/vulnerabilities/{identifier}/configurations",
-              "GET /v1/vulnerabilities/{identifier}/detection_signatures",
-              "GET /v1/vulnerabilities/{identifier}/exploitations",
-              "GET /v1/vulnerabilities/{identifier}/exploits",
-              "GET /v1/vulnerabilities/{identifier}/export",
-              "GET /v1/vulnerabilities/{identifier}/mentions",
-              "GET /v1/vulnerabilities/{identifier}/observables",
-              "GET /v1/vulnerabilities/{identifier}/products",
-              "GET /v1/vulnerabilities/{identifier}/technology_product_advisories",
-              "GET /v1/vulnerabilities/{identifier}/used_by_malware",
-              "GET /v1/vulnerable_technology_product_configuration_sets",
-              "GET /v1/vulnerable_technology_product_configuration_sets/by-configuration/{configuration_uuid}",
-              "GET /v1/vulnerable_technology_product_configuration_sets/by-vulnerability/{vulnerability_uuid}",
-              "GET /v1/vulnerable_technology_product_configuration_sets/{identifier}",
-              "GET /v1/weaknesses",
-              "GET /v1/weaknesses/{identifier}",
-              "POST /v1/products/search",
-              "POST /v1/vulnerable_technology_product_configuration_sets/search"
+              {
+                "group": "Threat Actors",
+                "pages": [
+                  "GET /v1/actors",
+                  "GET /v1/actors/{identifier}",
+                  "GET /v1/actors/{identifier}/attack_patterns",
+                  "GET /v1/actors/{identifier}/export",
+                  "GET /v1/actors/{identifier}/mentions",
+                  "GET /v1/actors/{identifier}/observables"
+                ]
+              },
+              {
+                "group": "Attack Patterns",
+                "pages": [
+                  "GET /v1/attack_patterns",
+                  "GET /v1/attack_patterns/{identifier}",
+                  "GET /v1/attack_patterns/{identifier}/malware",
+                  "GET /v1/attack_patterns/{identifier}/mentions",
+                  "GET /v1/attack_patterns/{identifier}/threat_actors"
+                ]
+              },
+              {
+                "group": "Breaches",
+                "pages": [
+                  "GET /v1/breaches",
+                  "GET /v1/breaches/{identifier}",
+                  "GET /v1/breaches/{identifier}/organizations"
+                ]
+              },
+              {
+                "group": "Detection Signatures",
+                "pages": [
+                  "GET /v1/detection_signatures",
+                  "GET /v1/detection_signatures/{identifier}"
+                ]
+              },
+              {
+                "group": "Exploitations",
+                "pages": [
+                  "GET /v1/exploitations",
+                  "GET /v1/exploitations/{identifier}"
+                ]
+              },
+              {
+                "group": "Exploits",
+                "pages": [
+                  "GET /v1/exploits",
+                  "GET /v1/exploits/{identifier}",
+                  "GET /v1/exploits/{identifier}/export",
+                  "GET /v1/exploits/{identifier}/vulnerabilities"
+                ]
+              },
+              {
+                "group": "Industries",
+                "pages": ["GET /v1/industries", "GET /v1/industries/{code}"]
+              },
+              {
+                "group": "Malware",
+                "pages": [
+                  "GET /v1/malware",
+                  "GET /v1/malware/{identifier}",
+                  "GET /v1/malware/{identifier}/attack_patterns",
+                  "GET /v1/malware/{identifier}/export",
+                  "GET /v1/malware/{identifier}/mentions",
+                  "GET /v1/malware/{identifier}/observables",
+                  "GET /v1/malware/{identifier}/vulnerabilities"
+                ]
+              },
+              {
+                "group": "Organizations",
+                "pages": [
+                  "GET /v1/organizations",
+                  "GET /v1/organizations/{identifier}",
+                  "GET /v1/organizations/{identifier}/breaches",
+                  "GET /v1/organizations/{identifier}/export",
+                  "GET /v1/organizations/{identifier}/mentions",
+                  "GET /v1/organizations/{identifier}/products"
+                ]
+              },
+              {
+                "group": "Products",
+                "pages": [
+                  "GET /v1/products",
+                  "GET /v1/products/{identifier}",
+                  "GET /v1/products/{identifier}/export",
+                  "GET /v1/products/{identifier}/mentions",
+                  "GET /v1/products/{identifier}/technology_product_advisories",
+                  "POST /v1/products/search"
+                ]
+              },
+              {
+                "group": "Technology Product Advisories",
+                "pages": [
+                  "GET /v1/technology_product_advisories",
+                  "GET /v1/technology_product_advisories/{identifier}",
+                  "GET /v1/technology_product_advisories/{identifier}/export",
+                  "GET /v1/technology_product_advisories/{identifier}/products",
+                  "GET /v1/technology_product_advisories/{identifier}/vulnerabilities"
+                ]
+              },
+              {
+                "group": "Vulnerabilities",
+                "pages": [
+                  "GET /v1/vulnerabilities",
+                  "GET /v1/vulnerabilities/{identifier}",
+                  "GET /v1/vulnerabilities/{identifier}/configurations",
+                  "GET /v1/vulnerabilities/{identifier}/detection_signatures",
+                  "GET /v1/vulnerabilities/{identifier}/exploitations",
+                  "GET /v1/vulnerabilities/{identifier}/exploits",
+                  "GET /v1/vulnerabilities/{identifier}/export",
+                  "GET /v1/vulnerabilities/{identifier}/mentions",
+                  "GET /v1/vulnerabilities/{identifier}/observables",
+                  "GET /v1/vulnerabilities/{identifier}/products",
+                  "GET /v1/vulnerabilities/{identifier}/technology_product_advisories",
+                  "GET /v1/vulnerabilities/{identifier}/used_by_malware"
+                ]
+              },
+              {
+                "group": "Vulnerable Technology Product Configuration Sets",
+                "pages": [
+                  "GET /v1/vulnerable_technology_product_configuration_sets",
+                  "GET /v1/vulnerable_technology_product_configuration_sets/by-configuration/{configuration_uuid}",
+                  "GET /v1/vulnerable_technology_product_configuration_sets/by-vulnerability/{vulnerability_uuid}",
+                  "GET /v1/vulnerable_technology_product_configuration_sets/{identifier}",
+                  "POST /v1/vulnerable_technology_product_configuration_sets/search"
+                ]
+              },
+              {
+                "group": "Weaknesses",
+                "pages": [
+                  "GET /v1/weaknesses",
+                  "GET /v1/weaknesses/{identifier}"
+                ]
+              }
             ]
           },
           {
