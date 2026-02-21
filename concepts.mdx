@@ -41,7 +41,7 @@ Example: The "LockBit" ransomware entity includes aliases, associated campaigns,
 
 ### Indicators
 
-**Indicators** (observables, IOCs) are evidence of potential malicious activity—IP addresses, domains, file hashes, URLs, email addresses. Mallory aggregates and enriches them from multiple sources, correlates them with entities (e.g. malware or threat actors), and tracks activity over time.
+**Indicators** (observables, IOCs) are evidence of potential malicious activity—IP addresses, domains, file hashes, URLs, email addresses. Mallory aggregates and enriches them from multiple sources, correlates them with entities (e.g. malware or threat actors), and tracks activity over time. In the app and API we often use **observables** or **IOCs** for the same concept.
 
 <Note>
 Example: A file hash tied to a QakBot campaign may link to known C2 IPs, phishing domains, and recent detection activity.
@@ -64,9 +64,9 @@ Sources emit references; references are chunked and analyzed; analysis produces 
 
 **Stories** are curated security narratives that group related entities and context from many references into a single, coherent view. Instead of browsing raw articles, you get a story that summarizes a campaign, a CVE, a breach, or another development—with links to underlying entities and sources. Stories are built from references and entities; they provide a narrative summary, key entities, references, a timeline of events when available, and related stories.
 
-### The Feed (Current Events)
+### The Feed
 
-**The Feed** (Current Events) is the curated overview of the latest threats and vulnerabilities. Content is sourced from open intelligence, analyzed, and summarized. You see recent high-signal coverage, summaries from multiple sources, and links to underlying references and entities. The feed is built from stories and profile-relevant entities so it reflects the latest relevant developments.
+**The Feed** is your customized view of stories—curated threat intelligence tailored to what matters to you. Content is sourced from open intelligence, analyzed, and summarized. You see recent high-signal coverage, summaries from multiple sources, and links to underlying references and entities. The feed is built from stories and profile-relevant entities so it reflects the latest relevant developments. To see all stories (not just your feed), go to **Monitor** → **Stories** in the app.
 
 ### Agent & Agent Threads
 
@@ -86,7 +86,7 @@ Sources emit references; references are chunked and analyzed; analysis produces 
   <Card title="Agent Threads" icon="message" href="/use/threads">
     Query entities and relationships in natural language.
   </Card>
-  <Card title="Threat Entities" icon="shield" href="/use/entities">
+  <Card title="Entities" icon="shield" href="/use/entities">
     Browse and search entities in the product.
   </Card>
   <Card title="Observables" icon="magnifying-glass" href="/use/observables">
