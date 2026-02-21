@@ -1,9 +1,9 @@
 ---
-title: "Errors & rate limits"
+title: "Errors & Rate Limits"
 description: "HTTP status codes, error responses, and rate limiting"
 ---
 
-## HTTP status codes
+## HTTP Status Codes
 
 The API uses standard HTTP status codes:
 
@@ -18,15 +18,15 @@ The API uses standard HTTP status codes:
 | `429` | Too many requests (rate limited) |
 | `500` | Server error |
 
-## Error response format
+## Error Response Format
 
 Error responses typically include a JSON body with details (e.g. message, code, or validation errors). Check the [API Reference](/api-reference/introduction) for schemas. When in doubt, use the `message` field for a human-readable description.
 
-## Rate limits
+## Rate Limits
 
 If rate limits are enforced, you will receive `429 Too Many Requests`. Retry after the period indicated in the response (e.g. `Retry-After` header or message). Implement backoff and respect any documented rate limits to avoid throttling.
 
-## Authentication errors
+## Authentication Errors
 
 - **401** – Ensure the `Authorization: Bearer YOUR_API_KEY` header is set and the key is valid.
 - **403** – Your key may not have permission for the requested resource or operation.

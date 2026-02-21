@@ -10,7 +10,7 @@
         "tab": "Guides",
         "groups": [
           {
-            "group": "First steps",
+            "group": "First Steps",
             "pages": ["index", "quickstart", "concepts", "changelog"]
           },
           {
@@ -24,7 +24,7 @@
             ]
           },
           {
-            "group": "Build & integrate",
+            "group": "Build & Integrate",
             "pages": [
               "build/auth",
               "build/search-syntax",
@@ -32,7 +32,6 @@
               "build/exports",
               "build/exports/vuln-intel-format",
               "build/exports/ioc-intel-format",
-              "build/monitoring",
               "build/integrations",
               "build/mcp"
             ]
@@ -48,14 +47,12 @@
             "group": "Entities",
             "pages": [
               "GET /v1/actors",
-              "GET /v1/actors/trending/diff",
               "GET /v1/actors/{identifier}",
               "GET /v1/actors/{identifier}/attack_patterns",
               "GET /v1/actors/{identifier}/export",
               "GET /v1/actors/{identifier}/mentions",
               "GET /v1/actors/{identifier}/observables",
               "GET /v1/attack_patterns",
-              "GET /v1/attack_patterns/trending/diff",
               "GET /v1/attack_patterns/{identifier}",
               "GET /v1/attack_patterns/{identifier}/malware",
               "GET /v1/attack_patterns/{identifier}/mentions",
@@ -74,7 +71,6 @@
               "GET /v1/industries",
               "GET /v1/industries/{code}",
               "GET /v1/malware",
-              "GET /v1/malware/trending/diff",
               "GET /v1/malware/{identifier}",
               "GET /v1/malware/{identifier}/attack_patterns",
               "GET /v1/malware/{identifier}/export",
@@ -82,14 +78,12 @@
               "GET /v1/malware/{identifier}/observables",
               "GET /v1/malware/{identifier}/vulnerabilities",
               "GET /v1/organizations",
-              "GET /v1/organizations/trending/diff",
               "GET /v1/organizations/{identifier}",
               "GET /v1/organizations/{identifier}/breaches",
               "GET /v1/organizations/{identifier}/export",
               "GET /v1/organizations/{identifier}/mentions",
               "GET /v1/organizations/{identifier}/products",
               "GET /v1/products",
-              "GET /v1/products/trending/diff",
               "GET /v1/products/{identifier}",
               "GET /v1/products/{identifier}/export",
               "GET /v1/products/{identifier}/mentions",
@@ -100,7 +94,6 @@
               "GET /v1/technology_product_advisories/{identifier}/products",
               "GET /v1/technology_product_advisories/{identifier}/vulnerabilities",
               "GET /v1/vulnerabilities",
-              "GET /v1/vulnerabilities/trending/diff",
               "GET /v1/vulnerabilities/{identifier}",
               "GET /v1/vulnerabilities/{identifier}/configurations",
               "GET /v1/vulnerabilities/{identifier}/detection_signatures",

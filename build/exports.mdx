@@ -3,16 +3,16 @@ title: "Exports"
 description: "Bulk export and export endpoints for vulnerability and other intelligence"
 ---
 
-## Bulk export
+## Bulk Export
 
 You can pull the latest intelligence from the platform in bulk via the exports API. Exports are generated on a schedule (e.g. roughly hourly).
 
-### Export strategies
+### Export Strategies
 
 - **full** – Full export of the selected type
 - **incremental** – Incremental export (changes since last run)
 
-### Export types
+### Export Types
 
 Supported export types include:
 
@@ -21,11 +21,11 @@ Supported export types include:
 
 You must specify `export_strategy` and `export_type` (or rely on documented defaults). The API returns a link to download the export, typically as a `.tar.gz` file.
 
-### Getting the latest export
+### Getting the Latest Export
 
 Use the **GET** `/v1/exports/latest` endpoint with the desired query parameters. See the [API Reference](/api-reference/introduction) for the exact parameters and response shape.
 
-### Other export endpoints
+### Other Export Endpoints
 
 The API may expose additional export-related endpoints (e.g. by type or by entity). Check the API Reference under **Exports** or the relevant resource.
 
@@ -34,6 +34,6 @@ The API may expose additional export-related endpoints (e.g. by type or by entit
 <Card title="API Reference" icon="code" href="/api-reference/introduction">
   Exports and related endpoints.
 </Card>
-<Card title="Monitoring & trending" icon="chart-line" href="/build/monitoring">
+<Card title="Monitoring & Trending" icon="chart-line" href="/build/monitoring">
   Use trending and monitoring for incremental workflows.
 </Card>
