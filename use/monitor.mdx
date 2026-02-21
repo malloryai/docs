@@ -1,0 +1,64 @@
+---
+title: "Monitor"
+description: "See trending entities, IOCs, and stories in the app"
+---
+
+## Monitor in Mallory
+
+The app helps you **monitor** what’s trending: which entities are getting attention, which IOCs are active, and which stories are drawing the most coverage. You see this both in dedicated lists and in the headers and context on entity and story pages.
+
+### Trending entities
+
+**Trending entities** (e.g. threat actors, vulnerabilities, malware) are those with the most recent mention activity over a time window (e.g. last 1, 7, or 30 days).
+
+**Where you see it**
+
+- **Entity list pages** – When you browse actors, vulnerabilities, malware, or organizations, you can sort or filter by trending so the most active entities appear first.
+- **Entity page headers** – On individual entity pages, the header area can show **trending** context (e.g. related or trending entities in that category) so you see what else is hot alongside the entity you’re viewing.
+- **Dashboards and feeds** – Curated views may highlight trending entities by type (e.g. trending vulnerabilities, trending actors).
+
+Use these views to focus on what’s gaining attention and drill into entity details as needed.
+
+### Trending IOCs (observables)
+
+**Trending IOCs** are observables (IPs, domains, hashes, etc.) that are both **recent** and have a **high count of opinions** (assessments from multiple sources). The app can surface them in the Observables experience so you see the most active and well-sourced indicators.
+
+**Where you see it**
+
+- **Observables listing** – Search and filter by recency and by how many opinions back each observable.
+- **Entity pages** – When you open an actor or malware page, linked observables are shown; those with more opinions or recent activity are often emphasized.
+
+Use this to prioritize IOCs for detection, hunting, or response.
+
+### Trending stories
+
+**Trending stories** are stories with the **most references**—i.e. the most cited by underlying articles and reports. They represent narratives that are getting the broadest coverage.
+
+**Where you see it**
+
+- **Stories list / feed** – Stories can be ordered by reference count so the most referenced (trending) stories appear first.
+- **Story detail pages** – The story view shows its reference count and list of references, so you can see why it ranks as highly cited.
+- **Entity pages** – When you’re on an entity, the stories that mention it may be ordered or highlighted by how many references they have.
+
+Use this to follow the narratives that the ecosystem is focusing on and to jump from a story to its entities and references.
+
+## From app to API
+
+The same ideas are available via the API for automation and integrations: trending entities use `sort=trending_Nd`, trending IOCs use recency and opinion count, and trending stories use sort by reference count. See the api guide [Monitor Trending (Build)](/build/monitor) for the exact parameters and examples.
+
+## Related
+
+<CardGroup cols={2}>
+  <Card title="Entities" icon="shield" href="/use/entities">
+    Browse entity types and their pages.
+  </Card>
+  <Card title="Observables" icon="magnifying-glass" href="/use/observables">
+    IOCs and observables in the app.
+  </Card>
+  <Card title="Stories" icon="newspaper" href="/use/stories">
+    How stories and references work.
+  </Card>
+  <Card title="Monitor (API)" icon="code" href="/build/monitor">
+    Trending via the API.
+  </Card>
+</CardGroup>

@@ -25,6 +25,60 @@ Many list endpoints support a **filter** query parameter. The filter is a string
 
 Exact behavior can vary by endpoint; see the [API Reference](/api-reference/introduction) for each endpoint's parameters.
 
+## Advanced filter parameters
+
+Many list endpoints support **additional query parameters** for advanced filtering. These are powered by fastapi-filter and appear as separate query parameters (not inside the `filter` string). Which fields and operators are available depends on the endpoint; the OpenAPI spec and [API Reference](/api-reference/introduction) list them per resource.
+
+### Parameter form
+
+- **Exact match**: `field=value` (e.g. `name=APT29`)
+- **With operator**: `field__operator=value` (e.g. `name__ilike=%APT%`, `score__gte=80`)
+
+### Common operators
+
+| Operator | Suffix | Meaning | Example |
+|----------|--------|---------|---------|
+| (exact) | _(none)_ | Equals | `name=APT29` |
+| Not equal | `__neq` | Not equal to value | `name__neq=Other` |
+| Greater than | `__gt` | Strictly greater than | `score__gt=70` |
+| Greater or equal | `__gte` | Greater than or equal | `score__gte=70` |
+| Less than | `__lt` | Strictly less than | `score__lt=100` |
+| Less or equal | `__lte` | Less than or equal | `score__lte=100` |
+| In list | `__in` | Match any of comma-separated values | `type__in=malware,actor` |
+| Not in list | `__not_in` | Exclude comma-separated values | `status__not_in=archived` |
+| Like (case-sensitive) | `__like` | SQL LIKE pattern; use `%` as wildcard | `name__like=%bear%` |
+| Like (case-insensitive) | `__ilike` | SQL LIKE pattern, case-insensitive | `name__ilike=%bear%` |
+| Is null | `__isnull` | `true` or `false` | `description__isnull=true` |
+
+### Date and time ranges
+
+Endpoints that support timestamp filtering often expose **half-open ranges** (start inclusive, end exclusive) in UTC:
+
+- `created_at__gte` – Records created on or after this datetime
+- `created_at__lt` – Records created before this datetime
+- `updated_at__gte` / `updated_at__lt` – Same for last update
+- `published_at__gte` / `published_at__lt` – For content with a published date
+
+To filter for a single day, use a range:
+
+```
+?created_at__gte=2026-01-30T00:00:00Z&created_at__lt=2026-01-31T00:00:00Z
+```
+
+Datetimes are normalized to UTC by the API.
+
+### Count-based filters
+
+Some endpoints allow filtering by the **count of related items** (e.g. number of aliases, citations). Parameters follow the form `{relationship}_count` or `{relationship}_count__operator` (e.g. `aliases_count__gte=2`). See the API Reference for each resource.
+
+### Examples
+
+```
+GET /v1/actors?name__ilike=%APT%&created_at__gte=2025-01-01
+GET /v1/vulnerabilities?score__gte=80&score__lte=100
+GET /v1/references?published_at__gte=2026-01-01&published_at__lt=2026-02-01
+```
+
 ## Pagination and Sort
 
 Common query parameters across list endpoints:
@@ -40,9 +94,9 @@ Example:
 GET /v1/actors?limit=20&offset=0&sort=created_at&order=desc
 ```
 
-## Other filters
+## Combining filters
 
-Some endpoints support additional filters (e.g. `targeted_industries`, `targeted_countries`, `source_countries`). See the OpenAPI spec or the API Reference for each resource.
+You can combine the text **filter** parameter, **advanced filter** query parameters, pagination, and sort in a single request. The exact set of advanced filter fields (e.g. `name`, `created_at`, `targeted_industries`, relationship counts) varies by endpoint. See the OpenAPI spec or [API Reference](/api-reference/introduction) for each resource.
 
 ## Related
 

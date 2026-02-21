@@ -15,7 +15,13 @@
           },
           {
             "group": "Use Mallory",
-            "pages": ["use/threads", "use/feed", "use/stories", "use/search"]
+            "pages": [
+              "use/threads",
+              "use/feed",
+              "use/stories",
+              "use/search",
+              "use/monitor"
+            ]
           },
           {
             "group": "Library",
@@ -27,7 +33,12 @@
           },
           {
             "group": "Build (API)",
-            "pages": ["build/auth", "build/search-syntax", "build/errors"]
+            "pages": [
+              "build/auth",
+              "build/search-syntax",
+              "build/monitor",
+              "build/errors"
+            ]
           },
           {
             "group": "Build (Exports)",
