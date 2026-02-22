@@ -69,25 +69,30 @@ function changelogChanged() {
 
 /**
  * Extract the "latest" update from the changelog for Slack.
- * Changelog is newest-first; the first ### Month YYYY under ## Timeline is the latest.
+ * Changelog is newest-first; the first #### date subheading under ## Timeline is the latest.
  */
 function extractLatestSection(content) {
   const timelineStart = content.indexOf("## Timeline");
   if (timelineStart === -1) return null;
 
   const afterTimeline = content.slice(timelineStart);
-  // First ### month heading = newest section (e.g. ### February 2026)
-  const monthHeadingRe =
-    /^### (January|February|March|April|May|June|July|August|September|October|November|December) \d{4}/gm;
-  const firstMatch = monthHeadingRe.exec(afterTimeline);
+
+  // Find the first #### subheading (e.g. #### February 20)
+  const subheadingRe = /^#### .+$/gm;
+  const firstMatch = subheadingRe.exec(afterTimeline);
   if (!firstMatch) return null;
 
+  // Extract from the first #### to the next #### (or --- or end)
   const sectionStart = firstMatch.index;
-  const sectionEnd = afterTimeline.indexOf("\n---", sectionStart);
-  const raw =
-    sectionEnd === -1
-      ? afterTimeline.slice(sectionStart)
-      : afterTimeline.slice(sectionStart, sectionEnd);
+  const nextMatch = subheadingRe.exec(afterTimeline);
+  const sectionSep = afterTimeline.indexOf("\n---", sectionStart);
+
+  // End at whichever comes first: next subheading, ---, or end of string
+  let sectionEnd = afterTimeline.length;
+  if (nextMatch) sectionEnd = Math.min(sectionEnd, nextMatch.index);
+  if (sectionSep !== -1) sectionEnd = Math.min(sectionEnd, sectionSep);
+
+  const raw = afterTimeline.slice(sectionStart, sectionEnd);
 
   // Strip frontmatter-style lines and normalize for Slack (shorten if huge)
   const lines = raw
@@ -97,7 +102,21 @@ function extractLatestSection(content) {
   return text.length > 3000 ? text.slice(0, 2997) + "…" : text;
 }
 
+/**
+ * Convert standard Markdown to Slack mrkdwn:
+ *   - #### headings → *bold* lines
+ *   - **bold** → *bold*
+ *   - [text](url) → <url|text>
+ */
+function toSlackMrkdwn(md) {
+  return md
+    .replace(/^####\s+(.+)$/gm, "*$1*")
+    .replace(/\*\*(.+?)\*\*/g, "*$1*")
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, "<$2|$1>");
+}
+
 function buildSlackPayload(latestText) {
+  const slackText = toSlackMrkdwn(latestText);
   return {
     text: "Changelog updated",
     blocks: [
@@ -105,7 +124,7 @@ function buildSlackPayload(latestText) {
         type: "section",
         text: {
           type: "mrkdwn",
-          text: "*Changelog updated*\n\nLatest section:\n\n" + latestText,
+          text: ":newspaper: *Changelog updated*\n\n" + slackText,
         },
       },
     ],
