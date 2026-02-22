@@ -11,7 +11,7 @@
   "navigation": {
     "tabs": [
       {
-        "tab": "User Guides",
+        "tab": "User Guide",
         "groups": [
           {
             "group": "First Steps",
@@ -45,7 +45,7 @@
         ]
       },
       {
-        "tab": "Developer Guides",
+        "tab": "Developer Guide",
         "groups": [
           {
             "group": "Build with Mallory",
