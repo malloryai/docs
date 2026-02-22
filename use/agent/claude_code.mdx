@@ -1,0 +1,86 @@
+---
+title: "Claude Code Plugin"
+description: "Use Mallory capabilites in Claude Code via our plugin marketplace and the Mallory plugin"
+---
+
+## Claude Code & Marketplace
+
+You can use Mallory capabilities from **Claude Code** by installing the **Mallory plugin** from the [Claude Code plugin marketplace](https://code.claude.com/docs/en/plugin-marketplaces). The marketplace provides security-focused skills for threat intelligence, adversary emulation, and vulnerability research.
+
+### Quick start
+
+1. **Add the marketplace** (if not already added):
+
+   ```
+   /plugin marketplace add malloryai/marketplace
+   ```
+
+2. **Install the Mallory plugin**:
+
+   ```
+   /plugin install mallory@mallory
+   ```
+
+3. **Set your API key** (used by the mallory-api skill and the Mallory API):
+
+   ```bash
+   export MALLORY_API_KEY="your-api-key"
+   ```
+
+   Get a key at [app.mallory.ai](https://app.mallory.ai) → API keys.
+
+4. **Install the Python SDK** (required for the mallory-api skill):
+
+   ```bash
+   pip install malloryapi
+   ```
+
+The SDK reads `MALLORY_API_KEY` from the environment automatically.
+
+---
+
+## Mallory plugin and skills
+
+The **mallory** plugin in the marketplace includes these skills:
+
+| Skill | Runtime | Description |
+|-------|---------|-------------|
+| **mallory-api** | Python | Query the Mallory threat intelligence API for actors, vulnerabilities, exploits, and malware. Central hub for API access. |
+| **adversary-emulation-planning** | Knowledge | Adversary emulation and TTP research using MITRE ATT&CK; uses mallory-api for data. |
+| **vulnerability-escalation** | Python | Privilege escalation and vulnerability chain analysis; uses mallory-api and asset discovery (e.g. assetquery). |
+
+### Example use cases
+
+- **Threat intelligence** – Query trending vulnerabilities and threat actors; get exploit and exploitation data.
+- **Detection engineering** – Monitor news for new TTPs and IoCs; generate detection candidates (e.g. KQL, SQL, Sigma).
+- **Adversary simulation** – Research threat actor TTPs via MITRE ATT&CK; plan red team and purple team exercises.
+- **Exploit & vulnerability analysis** – Analyze exploit efficacy; map privilege escalation chains; find where vulnerable software is deployed (e.g. AWS, Azure, GCP, GitHub, CrowdStrike).
+
+---
+
+## Marketplace structure
+
+The [Mallory marketplace repo](https://github.com/malloryai/marketplace) is organized as:
+
+- **Marketplace catalog** – `.claude-plugin/marketplace.json`
+- **Plugins** – e.g. `plugins/mallory/` (the Mallory plugin)
+  - **Plugin manifest** – `plugins/mallory/.claude-plugin/plugin.json`
+  - **Skills** – `plugins/mallory/skills/` (mallory-api, adversary-emulation-planning, vulnerability-escalation)
+
+Each skill has a `SKILL.md` with name, description, and optional `allowed-tools`. Python skills can include scripts under a `scripts/` subdirectory.
+
+---
+
+## Related
+
+<CardGroup cols={2}>
+  <Card title="Built-in Agent" icon="robot" href="/use/agent/builtin">
+    Use the Mallory agent and tools in the app.
+  </Card>
+  <Card title="MCP (any agent)" icon="plug" href="/use/agent/mcp">
+    Use Mallory from Cursor or other MCP clients.
+  </Card>
+  <Card title="Authentication" icon="key" href="/build/api/auth">
+    API keys and Bearer authentication.
+  </Card>
+</CardGroup>

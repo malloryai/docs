@@ -23,11 +23,11 @@ Example: vulnerabilities trending over the last 7 days, descending:
 GET /v1/vulnerabilities?sort=trending_7d&order=desc&limit=20
 ```
 
-Combine with **filter** or other query parameters as needed. See [Search & filter syntax](/build/search-syntax) and the [API Reference](/api-reference/introduction) for each endpoint’s parameters.
+Combine with **filter** or other query parameters as needed. See [Search & filter syntax](/build/api/search-syntax) and the [API Reference](/api-reference/introduction) for each endpoint's parameters.
 
 ### Trending IOCs (observables)
 
-For **observables** (IOCs), “trending” is driven by recency and how many **opinions** (source assessments) an observable has. To get trending IOCs:
+For **observables** (IOCs), "trending" is driven by recency and how many **opinions** (source assessments) an observable has. To get trending IOCs:
 
 1. **Recency** – Filter or sort by when observables were created or updated (e.g. `created_at` or `updated_at`).
 2. **Opinion count** – Use the API to list observables and sort or filter by the number of opinions (e.g. `opinions_count` where supported), so observables with more source opinions rank higher.
@@ -36,7 +36,7 @@ Exact parameter names and availability are in the [API Reference](/api-reference
 
 ### Trending stories
 
-For **stories**, “trending” is based on how many **references** back each story. Sort the stories list by reference count (e.g. `references_count` in descending order) to get the most cited stories first.
+For **stories**, "trending" is based on how many **references** back each story. Sort the stories list by reference count (e.g. `references_count` in descending order) to get the most cited stories first.
 
 Example:
 
@@ -49,10 +49,10 @@ Check the [API Reference](/api-reference/introduction) for the exact sort field 
 ## Related
 
 <CardGroup cols={2}>
-  <Card title="Search syntax" icon="code" href="/build/search-syntax">
+  <Card title="Search syntax" icon="code" href="/build/api/search-syntax">
     Filter, sort, and pagination for list endpoints.
   </Card>
-  <Card title="Monitor (Use Mallory)" icon="chart-line" href="/use/monitor">
+  <Card title="Monitor (Use Mallory)" icon="chart-line" href="/use/intel/monitor">
     How trending appears in the app.
   </Card>
   <Card title="API Reference" icon="book" href="/api-reference/introduction">

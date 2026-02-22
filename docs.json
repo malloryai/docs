@@ -14,18 +14,25 @@
             "pages": ["index", "quickstart", "concepts", "changelog"]
           },
           {
-            "group": "Use Mallory",
+            "group": "Mallory Intelligence",
             "pages": [
-              "use/threads",
-              "use/feed",
-              "use/stories",
-              "use/search",
-              "use/monitor"
+              "use/intel/feed",
+              "use/intel/stories",
+              "use/intel/search",
+              "use/intel/monitor",
+              {
+                "group": "Library",
+                "pages": ["use/entities", "use/observables"]
+              }
             ]
           },
           {
-            "group": "Library",
-            "pages": ["use/entities", "use/observables"]
+            "group": "Mallory Agent",
+            "pages": [
+              "use/agent/builtin",
+              "use/agent/claude_code",
+              "use/agent/mcp"
+            ]
           },
           {
             "group": "Integrations",
@@ -34,23 +41,25 @@
           {
             "group": "Build (API)",
             "pages": [
-              "build/auth",
-              "build/search-syntax",
-              "build/monitor",
-              "build/errors"
+              "build/api/auth",
+              "build/api/search-syntax",
+              "build/api/monitor",
+              "build/api/errors",
+              "build/api/sdk/python",
+              "build/api/reference"
             ]
           },
           {
             "group": "Build (Exports)",
             "pages": [
-              "build/exports",
+              "build/exports/index",
               "build/exports/vuln-intel-format",
               "build/exports/ioc-intel-format"
             ]
           },
           {
-            "group": "Build (Agents)",
-            "pages": ["build/mcp"]
+            "group": "Build (Open Source)",
+            "pages": ["build/opensource"]
           }
         ]
       },
@@ -298,8 +307,8 @@
     "global": {
       "anchors": [
         {
-          "anchor": "Documentation",
-          "href": "https://docs.mallory.ai",
+          "anchor": "Community",
+          "href": "https://join.slack.com/t/mallorycommunity/shared_invite/zt-3h9c09jw3-xmWYwAgPaU7~briLd9XUtQ",
           "icon": "book-open-cover"
         }
       ]

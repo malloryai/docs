@@ -1,0 +1,79 @@
+---
+title: "MCP (Any Agent)"
+description: "Use Mallory intelligence from any MCP-compatible agent or IDE"
+---
+
+## MCP (Any Agent)
+
+You can use Mallory threat intelligence from **any AI assistant or IDE** that supports the [Model Context Protocol (MCP)](https://modelcontextprotocol.io/). The **Mallory MCP server** exposes Mallory's API as MCP tools, so you can query vulnerabilities, threat actors, exploits, and more from Cursor, Claude Code, or other MCP clients.
+
+### What you can do
+
+- Query vulnerability data by CVE ID
+- Track real-world exploitation of vulnerabilities
+- Research threat actors and TTPs
+- Monitor emerging threats
+- Access detailed intelligence on security incidents
+
+### Requirements
+
+- A Mallory account and [API key](/build/api/auth)
+- Python 3.13+ (for the reference server implementation)
+- An MCP client (e.g. Cursor, Claude Code) configured to run the Mallory MCP server
+
+### Using the Mallory MCP server
+
+1. **Get an API key** – Sign in at [app.mallory.ai](https://app.mallory.ai) and create an API key.
+
+2. **Install and run the MCP server** – Clone the [mallorymcp](https://github.com/malloryai/mallorymcp) repo, set up a virtual environment, and install the package. Set `MALLORY_API_KEY` in your environment (or in the client config so it is passed to the server).
+
+3. **Configure your MCP client** – Add the Mallory MCP server to your client's MCP configuration. Your client will start the server and pass the environment. Examples:
+
+   **Claude (desktop app)** — Edit your Claude config (macOS: `~/Library/Application Support/Claude/claude_desktop_config.json`; Windows: `%APPDATA%\Claude\claude_desktop_config.json`), or use Settings → Developer → Edit Config. Add:
+
+   ```json
+   {
+     "mcpServers": {
+       "Mallory": {
+         "command": "uvx",
+         "args": ["mallorymcp"],
+         "env": {
+           "MALLORY_API_KEY": "your_api_key_here"
+         }
+       }
+     }
+   }
+   ```
+
+   **Claude Code** — From a terminal (with `MALLORY_API_KEY` in your environment or pass it via `--env`):
+
+   ```bash
+   claude mcp add --transport stdio Mallory -- uvx mallorymcp
+   ```
+
+   To store the server in the project so your team can use it: `claude mcp add --transport stdio --scope project Mallory -- uvx mallorymcp`
+
+   For Cursor and other clients, see the [mallorymcp](https://github.com/malloryai/mallorymcp) repo.
+
+4. **Use Mallory in chat** – Once the server is connected, ask your assistant to use Mallory (e.g. "Look up CVE-2024-1234" or "What do we know about APT29?"). The assistant will call the MCP server, which uses your API key to talk to the Mallory API.
+
+For full installation and configuration steps, see [MCP Server](/build/mcp).
+
+---
+
+## Related
+
+<CardGroup cols={2}>
+  <Card title="Built-in Agent" icon="robot" href="/use/agent/builtin">
+    Use the Mallory agent in the app.
+  </Card>
+  <Card title="Claude Code & marketplace" icon="puzzle-piece" href="/use/agent/claude_code">
+    Install the Mallory plugin from the Claude Code marketplace.
+  </Card>
+  <Card title="MCP Server (build)" icon="server" href="/build/mcp">
+    Install and configure the Mallory MCP server.
+  </Card>
+  <Card title="Authentication" icon="key" href="/build/api/auth">
+    API keys used by the MCP server.
+  </Card>
+</CardGroup>

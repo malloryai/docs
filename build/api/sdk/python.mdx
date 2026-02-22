@@ -1,0 +1,184 @@
+---
+title: "Python SDK"
+description: "Use the official Python client to call the Mallory API"
+---
+
+## Python SDK
+
+The **malloryapi** Python package is the official client for the Mallory threat intelligence API. It gives you a typed, resource-based interface so you can query vulnerabilities, threat actors, malware, stories, and more without building HTTP requests by hand.
+
+### Installation
+
+Install from PyPI:
+
+```bash
+pip install malloryapi
+```
+
+Or with [uv](https://docs.astral.sh/uv/):
+
+```bash
+uv add malloryapi
+```
+
+### Authentication
+
+Pass your API key when creating the client, or rely on the `MALLORY_API_KEY` environment variable.
+
+<Warning>
+Keep your API key secret. Do not commit it to version control or expose it in client-side code.
+</Warning>
+
+```python
+from malloryapi import MalloryApi
+
+# Explicit key
+client = MalloryApi(api_key="sk-...")
+
+# From environment (set MALLORY_API_KEY)
+client = MalloryApi()
+```
+
+If you need a different base URL (e.g. for staging), you can pass `base_url` and optionally `timeout`:
+
+```python
+client = MalloryApi(api_key="sk-...", base_url="https://api.staging.mallory.ai", timeout=30.0)
+```
+
+### Quick examples
+
+**List and get entities**
+
+```python
+# Recent vulnerabilities
+vulns = client.vulnerabilities.list(limit=10)
+for v in vulns.items:
+    print(v["cve_id"], v.get("cvss_base_score"))
+
+# Single vulnerability by CVE ID or UUID
+vuln = client.vulnerabilities.get("CVE-2024-1234")
+
+# Threat actors
+actors = client.threat_actors.list(limit=20, filter="name:APT")
+actor = client.threat_actors.get("m-threat-actor-...")
+```
+
+**Trending**
+
+Many entity resources support a `trending()` method with a time window (`"1d"`, `"7d"`, `"30d"`):
+
+```python
+# Vulnerabilities trending in the last 7 days
+vulns = client.vulnerabilities.trending(period="7d")
+
+# Threat actors trending in the last 30 days
+actors = client.threat_actors.trending(period="30d")
+```
+
+**Stories and references**
+
+```python
+# List stories, e.g. sorted by reference count
+stories = client.stories.list(limit=10, sort="references_count", order="desc")
+
+# Get a story and its references
+story = client.stories.get(story_uuid)
+refs = client.stories.references(story_uuid)
+```
+
+**Search**
+
+```python
+results = client.search.query("Log4j vulnerability")
+```
+
+### Pagination
+
+List methods return a **paginated response** with `.items`, `.total`, `.offset`, `.limit`, and `.has_more`:
+
+```python
+page = client.vulnerabilities.list(offset=0, limit=50)
+print(f"Showing {len(page.items)} of {page.total}")
+
+if page.has_more:
+    next_page = client.vulnerabilities.list(offset=50, limit=50)
+```
+
+To iterate over all results without manual offset handling, use the helpers:
+
+```python
+from malloryapi import MalloryApi, paginate_sync
+
+client = MalloryApi(api_key="sk-...")
+
+for vuln in paginate_sync(client.vulnerabilities.list, limit=100):
+    print(vuln["cve_id"])
+```
+
+### Async client
+
+For async code, use `AsyncMalloryApi` as an async context manager:
+
+```python
+from malloryapi import AsyncMalloryApi, paginate_async
+
+async with AsyncMalloryApi(api_key="sk-...") as client:
+    vulns = await client.vulnerabilities.list(limit=10)
+    actor = await client.threat_actors.get("apt28-uuid")
+
+# Auto-pagination in async
+async with AsyncMalloryApi(api_key="sk-...") as client:
+    async for vuln in paginate_async(client.vulnerabilities.list):
+        print(vuln["cve_id"])
+```
+
+### Error handling
+
+The SDK raises specific exceptions for common HTTP cases. Catch them as needed:
+
+```python
+from malloryapi import MalloryApi, NotFoundError, AuthenticationError, RateLimitError
+
+client = MalloryApi(api_key="sk-...")
+
+try:
+    vuln = client.vulnerabilities.get("CVE-9999-0000")
+except NotFoundError:
+    print("Vulnerability not found")
+except AuthenticationError:
+    print("Invalid or missing API key")
+except RateLimitError:
+    print("Rate limited; retry later")
+```
+
+All of these inherit from `APIError`, which exposes `status_code` and `response_body` for debugging.
+
+### Resources overview
+
+The client groups the API into **resources**. Use the accessors and methods that map to the [API Reference](/api-reference/introduction).
+
+| Area | Accessor | Examples |
+|------|----------|----------|
+| **Entities** | `client.vulnerabilities`, `client.threat_actors`, `client.malware`, `client.exploits`, `client.organizations`, `client.products`, `client.attack_patterns`, `client.breaches`, `client.weaknesses`, `client.detection_signatures`, `client.technology_product_advisories` | `list`, `get`, `trending` (where supported), `export`, sub-resources (e.g. `mentions`, `observables`) |
+| **Content** | `client.stories`, `client.references`, `client.sources`, `client.content_chunks` | `list`, `get`, `create` (references), sub-resources |
+| **Analytics** | `client.mentions`, `client.search` | `list`, `query` |
+| **User** | `client.user` | `get` |
+
+For exact method names and parameters, see the [malloryapi README](https://github.com/malloryai/malloryapi) or the [API Reference](/api-reference/introduction).
+
+### Next steps
+
+<CardGroup cols={2}>
+  <Card title="Authentication" icon="key" href="/build/api/auth">
+    API keys and Bearer tokens.
+  </Card>
+  <Card title="Search & filter syntax" icon="filter" href="/build/api/search-syntax">
+    Filter and sort list endpoints.
+  </Card>
+  <Card title="Errors & rate limits" icon="circle-exclamation" href="/build/api/errors">
+    HTTP codes and rate limiting.
+  </Card>
+  <Card title="API Reference" icon="code" href="/api-reference/introduction">
+    Full endpoint reference.
+  </Card>
+</CardGroup>
