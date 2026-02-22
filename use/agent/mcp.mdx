@@ -1,5 +1,5 @@
 ---
-title: "MCP (Any Agent)"
+title: "Via MCP (Any Agent)"
 description: "Use Mallory intelligence from any MCP-compatible agent or IDE"
 ---
 
@@ -53,7 +53,33 @@ You can use Mallory threat intelligence from **any AI assistant or IDE** that su
 
    To store the server in the project so your team can use it: `claude mcp add --transport stdio --scope project Mallory -- uvx mallorymcp`
 
-   For Cursor and other clients, see the [mallorymcp](https://github.com/malloryai/mallorymcp) repo.
+   ### Configuring Cursor as an interface
+
+   Configure the Mallory MCP server in Cursor so you can query Mallory from Cursor chat and Composer.
+
+   - **Project-level** (recommended for teams): Create or edit `.cursor/mcp.json` in your project root so the config can be committed and shared:
+
+   ```json
+   {
+     "mcpServers": {
+       "Mallory": {
+         "command": "uvx",
+         "args": ["mallorymcp"],
+         "env": {
+           "MALLORY_API_KEY": "your_api_key_here"
+         }
+       }
+     }
+   }
+   ```
+
+   - **Global**: Use `~/.cursor/mcp.json` for a personal config that applies to all projects. Use the same `mcpServers.Mallory` structure as above.
+
+   - **Via UI**: Cursor Settings (Cmd/Ctrl + ,) → **Tools & MCP** → **Add new MCP server**. Set the command to `uvx`, arguments to `["mallorymcp"]`, and add `MALLORY_API_KEY` in the environment section.
+
+   Restart Cursor after adding or changing MCP servers so the Mallory tools are available in chat.
+
+   For other MCP clients, see the [mallorymcp](https://github.com/malloryai/mallorymcp) repo.
 
 4. **Use Mallory in chat** – Once the server is connected, ask your assistant to use Mallory (e.g. "Look up CVE-2024-1234" or "What do we know about APT29?"). The assistant will call the MCP server, which uses your API key to talk to the Mallory API.
 
