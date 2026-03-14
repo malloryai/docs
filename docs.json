@@ -202,7 +202,7 @@
                   "GET /v1/vulnerabilities/{identifier}/observables",
                   "GET /v1/vulnerabilities/{identifier}/products",
                   "GET /v1/vulnerabilities/{identifier}/technology_product_advisories",
-                  "GET /v1/vulnerabilities/{identifier}/used_by_malware"
+                  "GET /v1/vulnerabilities/{identifier}/malware"
                 ]
               },
               {

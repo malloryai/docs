@@ -51,7 +51,7 @@ Each line in the JSONL export contains a complete observable record with all rel
 | `updated_at` | `string` | ✅ | When this record was last updated in the system |
 | `observable` | `object` | ✅ | The observable (IOC) data |
 | `opinions` | `array[object]` |  | List of opinions about this observable from various sources |
-| `verdict_summary` | `object` |  | Summary of verdicts across all opinions (e.g., {'malicious': 3, 'suspicious': 1}) |
+| `verdict_summary` | `object` |  | Summary of verdicts across all opinions (e.g., `{'malicious': 3, 'suspicious': 1}`) |
 | `source_count` | `integer` |  | Number of unique sources with opinions on this observable |
 | `first_seen_at` | `string` |  | Earliest published_at timestamp across all opinions (ISO format) |
 | `last_seen_at` | `string` |  | Latest published_at timestamp across all opinions (ISO format) |
