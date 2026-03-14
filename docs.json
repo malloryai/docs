@@ -79,7 +79,7 @@
       },
       {
         "tab": "API Reference",
-        "openapi": "https://api.mallory.ai/openapi.json",
+        "openapi": "/openapi.json",
         "groups": [
           {
             "group": "Overview",

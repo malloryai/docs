@@ -34,6 +34,29 @@ node scripts/sync-export-docs.js --regenerate
 
 ---
 
+## sync-openapi.js
+
+Fetches the OpenAPI spec from the production API and writes it to `openapi.json` at the repo root. The docs site references this local file instead of the remote URL to avoid transient network failures during Mintlify builds.
+
+### Usage
+
+From the **mintlify-docs** repo root:
+
+```bash
+node scripts/sync-openapi.js
+```
+
+### Environment
+
+- **`OPENAPI_URL`** – URL to fetch (default: `https://api.mallory.ai/openapi.json`).
+
+### When to run
+
+- After deploying API changes that modify the OpenAPI spec.
+- Before publishing docs if you want the latest endpoint definitions.
+
+---
+
 ## notify-changelog-to-slack.js
 
 When the changelog page (`changelog.mdx`) is updated, posts the latest timeline section to Slack (internal and community webhooks). Uses **git history** to detect changes (no hash file). Used in GitHub Actions so that updates to the changelog trigger a notification to the two changelog channels.

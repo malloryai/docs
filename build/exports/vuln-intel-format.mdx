@@ -111,9 +111,6 @@ The following models represent the individual components that make up the comple
 | `published_at` | `string` |  | CVE publication date |
 | `merged_into_uuid` | `string` |  | UUID of the entity this vulnerability was merged into |
 | `merged_at` | `string` |  | When this vulnerability was merged |
-| `merged_reason` | `string` |  | Reason for the merge |
-| `merged_evidence` | `string` |  | Evidence supporting the merge decision |
-| `merged_evidence_urls` | `array[string]` |  | URLs providing evidence for the merge |
 | `upstream_references` | `array[object]` |  | Upstream reference links from NVD and other sources |
 | `raw_mitre_cvelist_v5_cves_adp` | `array[object]` |  | Raw MITRE CVE ADP (Authorized Data Publisher) data |
 | `weaknesses` | `array[string]` |  | List of CWE identifiers associated with this vulnerability |
@@ -125,9 +122,9 @@ The following models represent the individual components that make up the comple
 
 ##### Summary
 
-- **Total Fields:** 38
+- **Total Fields:** 35
 - **Required Fields:** 3
-- **Optional Fields:** 35
+- **Optional Fields:** 32
 
 #### Exploit
 
@@ -365,9 +362,6 @@ A complete vulnerability intelligence record with all related entities:
     "published_at": "2021-05-11T19:11:16+00:00",
     "merged_into_uuid": null,
     "merged_at": null,
-    "merged_reason": null,
-    "merged_evidence": null,
-    "merged_evidence_urls": null,
     "upstream_references": null,
     "raw_mitre_cvelist_v5_cves_adp": null,
     "weaknesses": [
@@ -497,9 +491,6 @@ A complete vulnerability intelligence record with all related entities:
   "published_at": "2021-05-11T19:11:16+00:00",
   "merged_into_uuid": null,
   "merged_at": null,
-  "merged_reason": null,
-  "merged_evidence": null,
-  "merged_evidence_urls": null,
   "upstream_references": null,
   "raw_mitre_cvelist_v5_cves_adp": null,
   "weaknesses": [
