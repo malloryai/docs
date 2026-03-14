@@ -19,7 +19,7 @@ const path = require("path");
 const https = require("https");
 
 const REPO_ROOT = path.resolve(__dirname, "..");
-const OUT_PATH = path.join(REPO_ROOT, "openapi.json");
+const OUT_PATH = path.join(REPO_ROOT, "api-reference", "openapi.json");
 const OPENAPI_URL =
   process.env.OPENAPI_URL || "https://api.mallory.ai/openapi.json";
 
